@@ -40,6 +40,11 @@ describe InlineExecutor, "for `/usr/bin/env git'" do
     run @git.log("HEAD~1", :stat => true, :p => true)
   end
   
+  it "should execute a single command with a single long option and value" do
+    @fake_system.should_receive(:execute).with("/usr/bin/env git log --pretty='raw'")
+    run @git.log(:pretty => "raw")
+  end
+  
   it "should execute a 2-level command" do
     @fake_system.should_receive(:execute).with("/usr/bin/env git svn init")
     run @git.svn.init
